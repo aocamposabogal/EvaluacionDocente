@@ -151,6 +151,24 @@ public interface IBusinessDelegatorView {
 
 	public void deleteRespuesta(Respuesta entity) throws Exception;
 
+	/**
+	 * 
+	 * <p><b>Realiza el llamado a RespuestaLogic, el cual se encargara de actualizar los datos </b></p><br/>
+	 * <ul><li></li></ul><br/>
+	 * @author EAM <br/>
+	 *         Jefry Londoño Acosta <br/>
+	 *         Email: jjmb2789@gmail.com <br/>
+	 * @author EAM <br/>
+	 *         Alvaro Javier Lotero <br/>
+	 *         Email: <br/>
+	 * @author EAM <br/>
+	 *         Santiago Idarraga <br/>
+	 *         <br/>
+	 *         14/10/2016
+	 * @version 1.0
+	 * @param entity Respuesta que se va a actualizar
+	 * @throws Exception
+	 */
 	public void updateRespuesta(Respuesta entity) throws Exception;
 
 	public Respuesta getRespuesta(Integer id) throws Exception;

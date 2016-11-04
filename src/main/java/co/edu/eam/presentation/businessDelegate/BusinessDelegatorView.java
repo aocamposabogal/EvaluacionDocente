@@ -46,8 +46,7 @@ import javax.ejb.Stateless;
 
 /**
  * 
- * @author Jefry Londoño <jjmb2789@gmail.com>
- * @17/10/2016
+ * @author Jefry Londoño <jjmb2789@gmail.com> @17/10/2016
  * @version
  */
 @Stateless
@@ -310,6 +309,12 @@ public class BusinessDelegatorView implements IBusinessDelegatorView {
 		respuestaLogic.deleteRespuesta(entity);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see co.edu.eam.presentation.businessDelegate.IBusinessDelegatorView#
+	 * updateRespuesta(co.edu.eam.modelo.Respuesta)
+	 */
 	public void updateRespuesta(Respuesta entity) throws Exception {
 		respuestaLogic.updateRespuesta(entity);
 	}
@@ -410,6 +415,6 @@ public class BusinessDelegatorView implements IBusinessDelegatorView {
 	 */
 	public List<RespuestaDTO> getDataRespuesta(Integer idPregunta, Integer idPresentacion) throws Exception {
 
-		return respuestaLogic.getDataRespuesta(idPregunta,idPresentacion);
+		return respuestaLogic.getDataRespuesta(idPregunta, idPresentacion);
 	}
 }

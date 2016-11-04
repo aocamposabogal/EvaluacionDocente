@@ -28,4 +28,13 @@ public class RespuestaDAO extends JpaDaoImpl<Respuesta, Integer>
     private static final Logger log = LoggerFactory.getLogger(RespuestaDAO.class);
     @PersistenceContext
     private EntityManager entityManager;
+    
+    public RespuestaDAO(EntityManager entityManager){
+    	super(entityManager, Respuesta.class);
+    	this.entityManager=entityManager;
+    }
+    
+    public RespuestaDAO(){
+    	
+    }
 }

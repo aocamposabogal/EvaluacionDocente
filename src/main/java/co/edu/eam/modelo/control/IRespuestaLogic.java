@@ -32,8 +32,32 @@ public interface IRespuestaLogic {
 	public void deleteRespuesta(Respuesta entity) throws Exception;
 
 	/**
-	 * Update an existing Respuesta entity
-	 *
+	 * 
+	 * <p>
+	 * <b>Realiza las validaciones de los campos de una respuesta y
+	 * posteriormente envia los datos al DAO para ser posteriormente
+	 * actualizados </b>
+	 * </p>
+	 * <br/>
+	 * <ul>
+	 * <li></li>
+	 * </ul>
+	 * <br/>
+	 * 
+	 * @author EAM <br/>
+	 *         Jefry Londoño Acosta <br/>
+	 *         Email: jjmb2789@gmail.com <br/>
+	 * @author EAM <br/>
+	 *         Alvaro Javier Lotero <br/>
+	 *         Email: <br/>
+	 * @author EAM <br/>
+	 *         Santiago Idarraga <br/>
+	 *         <br/>
+	 *         14/10/2016
+	 * @version 1.0
+	 * @param entity
+	 *            Respuesta que se va a actualizar
+	 * @throws Exception
 	 */
 	public void updateRespuesta(Respuesta entity) throws Exception;
 
