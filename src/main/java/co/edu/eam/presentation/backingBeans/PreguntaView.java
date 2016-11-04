@@ -118,56 +118,6 @@ public class PreguntaView implements Serializable {
 
 	}
 
-//	public void rowEventListener(RowEditEvent e) {
-//		try {
-//			PreguntaDTO preguntaDTO = (PreguntaDTO) e.getObject();
-//
-//			if (txtEstado == null) {
-//				txtEstado = new InputText();
-//			}
-//
-//			txtEstado.setValue(preguntaDTO.getEstado());
-//
-//			if (txtPregunta == null) {
-//				txtPregunta = new InputText();
-//			}
-//
-//			txtPregunta.setValue(preguntaDTO.getPregunta());
-//
-//			if (txtId_Periodo == null) {
-//				txtId_Periodo = new InputText();
-//			}
-//
-//			txtId_Periodo.setValue(preguntaDTO.getId_Periodo());
-//
-//			if (txtId_TipoEvaluacion == null) {
-//				txtId_TipoEvaluacion = new InputText();
-//			}
-//
-//			txtId_TipoEvaluacion.setValue(preguntaDTO.getId_TipoEvaluacion());
-//
-//			if (txtId == null) {
-//				txtId = new InputText();
-//			}
-//
-//			txtId.setValue(preguntaDTO.getId());
-//
-//			Integer id = FacesUtils.checkInteger(txtId);
-//			entity = businessDelegatorView.getPregunta(id);
-//
-//			action_modify();
-//		} catch (Exception ex) {
-//		}
-//	}
-//
-//	public String action_new() {
-//		action_clear();
-//		selectedPregunta = null;
-//		setShowDialog(true);
-//
-//		return "";
-//	}
-
 	public String action_clear() {
 		entity = null;
 		selectedPregunta = null;
@@ -250,8 +200,8 @@ public class PreguntaView implements Serializable {
 	 * </p>
 	 * </b>
 	 * 
-	 * @author Daniel Giraldo <br>
-	 *         Email: <pipe_635@hotmail.com> <br>
+	 * @author Daniel Henao <br>
+	 *         Email: <danielhenao22@outlook.com> <br>
 	 *         13/10/2016
 	 * @return Cadena vacia
 	 * 
@@ -290,8 +240,8 @@ public class PreguntaView implements Serializable {
 	 * </p>
 	 * </b>
 	 * 
-	 * @author Daniel Giraldo <br>
-	 *         Email: <pipe_635@hotmail.com> <br>
+	 * @author Daniel Henao <br>
+	 *         Email: <danielhenao22@outlook.com> <br>
 	 *         ${date}
 	 * @return Cadena vacia
 	 *
@@ -328,6 +278,76 @@ public class PreguntaView implements Serializable {
 			entity = new Pregunta();
 			Integer id = generarID();
 			Integer tipo = 2;
+			entity.setEstado(idEstado);
+			entity.setId(id);
+			entity.setPregunta(FacesUtils.checkString(txtPregunta));
+			entity.setPeriodo((idPeriodo != null) ? businessDelegatorView.getPeriodo(idPeriodo) : null);
+			entity.setTipoEvaluacion((tipo != null) ? businessDelegatorView.getTipoEvaluacion(tipo) : null);
+			businessDelegatorView.savePregunta(entity);
+			FacesUtils.addInfoMessage(ZMessManager.ENTITY_SUCCESFULLYSAVED);
+
+		} catch (Exception e) {
+			entity = null;
+			FacesUtils.addErrorMessage(e.getMessage());
+		}
+
+		return "";
+	}
+	
+	/**
+	 * <b>
+	 * <p>
+	 * Metodo que se encarga de crear la pregunta el cual se le setea los datos
+	 * a la Pregunta <br>
+	 * </p>
+	 * </b>
+	 * 
+	 * @author Daniel Henao <br>
+	 *         Email: <danielhenao22@outlook.com> <br>
+	 *         ${date}
+	 * @return Cadena vacia
+	 * 
+	 */
+	public String action_create_ev() {
+		try {
+			entity = new Pregunta();
+			Integer id = generarID();
+			Integer tipo = 1;
+			entity.setEstado(idEstado);
+			entity.setId(id);
+			entity.setPregunta(FacesUtils.checkString(txtPregunta));
+			entity.setPeriodo((idPeriodo != null) ? businessDelegatorView.getPeriodo(idPeriodo) : null);
+			entity.setTipoEvaluacion((tipo != null) ? businessDelegatorView.getTipoEvaluacion(tipo) : null);
+			businessDelegatorView.savePregunta(entity);
+			FacesUtils.addInfoMessage(ZMessManager.ENTITY_SUCCESFULLYSAVED);
+
+		} catch (Exception e) {
+			entity = null;
+			FacesUtils.addErrorMessage(e.getMessage());
+		}
+
+		return "";
+	}
+	
+	/**
+	 * <b>
+	 * <p>
+	 * Metodo que se encarga de crear la pregunta el cual se le setea los datos
+	 * a la Pregunta <br>
+	 * </p>
+	 * </b>
+	 * 
+	 * @author Daniel Henao <br>
+	 *         Email: <danielhenao22@outlook.com> <br>
+	 *         ${date}
+	 * @return Cadena vacia
+	 * 
+	 */
+	public String action_create_co() {
+		try {
+			entity = new Pregunta();
+			Integer id = generarID();
+			Integer tipo = 3;
 			entity.setEstado(idEstado);
 			entity.setId(id);
 			entity.setPregunta(FacesUtils.checkString(txtPregunta));
@@ -380,32 +400,6 @@ public class PreguntaView implements Serializable {
 		return "";
 	}
 
-//	public String action_delete_datatable(ActionEvent evt) {
-//		try {
-//			selectedPregunta = (PreguntaDTO) (evt.getComponent().getAttributes().get("selectedPregunta"));
-//
-//			Integer id = new Integer(selectedPregunta.getId());
-//			entity = businessDelegatorView.getPregunta(id);
-//			action_delete();
-//		} catch (Exception e) {
-//			FacesUtils.addErrorMessage(e.getMessage());
-//		}
-//
-//		return "";
-//	}
-//
-//	public String action_delete_master() {
-//		try {
-//			Integer id = FacesUtils.checkInteger(txtId);
-//			entity = businessDelegatorView.getPregunta(id);
-//			action_delete();
-//		} catch (Exception e) {
-//			FacesUtils.addErrorMessage(e.getMessage());
-//		}
-//
-//		return "";
-//	}
-
 	/**
 	 * <b>
 	 * <p>
@@ -430,46 +424,6 @@ public class PreguntaView implements Serializable {
 		}
 	}
 
-//	public String action_closeDialog() {
-//		setShowDialog(false);
-//		action_clear();
-//
-//		return "";
-//	}
-//
-//	public String actionDeleteDataTableEditable(ActionEvent evt) {
-//		try {
-//			selectedPregunta = (PreguntaDTO) (evt.getComponent().getAttributes().get("selectedPregunta"));
-//
-//			Integer id = new Integer(selectedPregunta.getId());
-//			entity = businessDelegatorView.getPregunta(id);
-//			businessDelegatorView.deletePregunta(entity);
-//			data.remove(selectedPregunta);
-//			FacesUtils.addInfoMessage(ZMessManager.ENTITY_SUCCESFULLYDELETED);
-//			action_clear();
-//		} catch (Exception e) {
-//			FacesUtils.addErrorMessage(e.getMessage());
-//		}
-//
-//		return "";
-//	}
-//
-//	public String action_modifyWitDTO(String estado, Integer id, String pregunta, Integer id_Periodo,
-//			Integer id_TipoEvaluacion) throws Exception {
-//		try {
-//			entity.setEstado(FacesUtils.checkString(estado));
-//			entity.setPregunta(FacesUtils.checkString(pregunta));
-//			businessDelegatorView.updatePregunta(entity);
-//			FacesUtils.addInfoMessage(ZMessManager.ENTITY_SUCCESFULLYMODIFIED);
-//		} catch (Exception e) {
-//			// renderManager.getOnDemandRenderer("PreguntaView").requestRender();
-//			FacesUtils.addErrorMessage(e.getMessage());
-//			throw e;
-//		}
-//
-//		return "";
-//	}
-
 	/**
 	 * <b>
 	 * <p>
@@ -479,8 +433,8 @@ public class PreguntaView implements Serializable {
 	 * </p>
 	 * </b>
 	 * 
-	 * @author Daniel Giraldo <br>
-	 *         Email: <pipe_635@hotmail.com> <br>
+	 * @author Daniel Henao <br>
+	 *         Email: <danielhenao22@outlook.com> <br>
 	 *         14/10/2016
 	 * @return Lista con los datos de las pregunts que se quieren listar
 	 * 
@@ -534,6 +488,7 @@ public class PreguntaView implements Serializable {
 			if (data == null) {
 				int tipoEvaluacion = FacesUtils.checkInteger(txtTipoEvaluacion);
 				data = businessDelegatorView.getDataPregunta(tipoEvaluacion, ESTADO_PREGUNTA);
+				FacesUtils.addInfoMessage(ZMessManager.ENTCHILD);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
