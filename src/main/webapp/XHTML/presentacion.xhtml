@@ -29,32 +29,14 @@
 				<p:messages id="msg" />
 				<p:growl id="men"/>
 					<p:panel id="panelPresentacion" header="Presentacion">							
-						<h:panelGrid columns="2" id="panelGrid" >
-												 	<h:outputText id="msgId" value="Id"/>
-						 	<p:inputText id="txtId" binding="#{presentacionView.txtId}">
-						 		<p:ajax update="panelPresentacion,msg,panelBotones" listener="#{presentacionView.listener_txtId}"/>
-						 	</p:inputText>	
-																		
-													<h:outputText id="msgComentario" value=" Comentario"/>
-							<p:inputText id="txtComentario" disabled="true" binding="#{presentacionView.txtComentario}"/>
-													<h:outputText id="msgDocente" value=" Docente"/>
-							<p:inputText id="txtDocente" disabled="true" binding="#{presentacionView.txtDocente}"/>
-													<h:outputText id="msgEstado" value=" Estado"/>
-							<p:inputText id="txtEstado" disabled="true" binding="#{presentacionView.txtEstado}"/>
+						<h:panelGrid columns="2" id="panelGrid" >													
 													<h:outputText id="msgEvaluador" value=" Evaluador"/>
-							<p:inputText id="txtEvaluador" disabled="true" binding="#{presentacionView.txtEvaluador}"/>
-													<h:outputText id="msgMateria" value=" Materia"/>
-							<p:inputText id="txtMateria" disabled="true" binding="#{presentacionView.txtMateria}"/>
-													<h:outputText id="msgId_Evaluacion" value=" Id_Evaluacion"/>
-							<p:inputText id="txtId_Evaluacion" disabled="true" binding="#{presentacionView.txtId_Evaluacion}"/>
-												
+							<p:inputText id="txtEvaluador" binding="#{presentacionView.txtEvaluador}"/>												
 										   </h:panelGrid>
 				</p:panel>
 	   			<p:panel id="panelBotones">
 					<div align="center">					
-						<p:commandButton id="btnSave" binding="#{presentacionView.btnSave}" disabled="true" value="Save" action="#{presentacionView.action_save()}" update="panelPresentacion,msg,panelBotones" />
-						<p:commandButton id="btnDelete" binding="#{presentacionView.btnDelete}" disabled="true" value="Delete" action="#{presentacionView.action_delete_master()}" onclick="if(!confirm('Do you really want to delete this Entry?')){return false;}" update="panelPresentacion,msg,panelBotones" />
-						<p:commandButton id="btnClear" value="Clear" action="#{presentacionView.action_clear()}" update="panelPresentacion,msg,panelBotones" />
+						<p:commandButton id="btnSave" binding="#{presentacionView.btnSave}" value="Save" action="#{presentacionView.action_save()}" update="panelPresentacion,msg,panelBotones" />
 					</div>
 				</p:panel>			
 			</h:form>

@@ -125,63 +125,13 @@ public class PresentacionView implements Serializable {
         }
     }
 
-    public String action_new() {
-        action_clear();
+    public String action_new() {        
         selectedPresentacion = null;
         setShowDialog(true);
 
         return "";
     }
 
-    public String action_clear() {
-        entity = null;
-        selectedPresentacion = null;
-
-        if (txtComentario != null) {
-            txtComentario.setValue(null);
-            txtComentario.setDisabled(true);
-        }
-
-        if (txtDocente != null) {
-            txtDocente.setValue(null);
-            txtDocente.setDisabled(true);
-        }
-
-        if (txtEstado != null) {
-            txtEstado.setValue(null);
-            txtEstado.setDisabled(true);
-        }
-
-        if (txtEvaluador != null) {
-            txtEvaluador.setValue(null);
-            txtEvaluador.setDisabled(true);
-        }
-
-        if (txtMateria != null) {
-            txtMateria.setValue(null);
-            txtMateria.setDisabled(true);
-        }
-
-        if (txtId_Evaluacion != null) {
-            txtId_Evaluacion.setValue(null);
-            txtId_Evaluacion.setDisabled(true);
-        }
-
-        if (txtId != null) {
-            txtId.setValue(null);
-            txtId.setDisabled(false);
-        }
-
-        if (btnSave != null) {
-            btnSave.setDisabled(true);
-        }
-
-        if (btnDelete != null) {
-            btnDelete.setDisabled(true);
-        }
-
-        return "";
-    }
     
 
     public void listener_txtId() {
@@ -282,7 +232,7 @@ public class PresentacionView implements Serializable {
                         txtId_Evaluacion)) : null);
             businessDelegatorView.savePresentacion(entity);
             FacesUtils.addInfoMessage(ZMessManager.ENTITY_SUCCESFULLYSAVED);
-            action_clear();
+            
         } catch (Exception e) {
             entity = null;
             FacesUtils.addErrorMessage(e.getMessage());
@@ -348,7 +298,7 @@ public class PresentacionView implements Serializable {
         try {
             businessDelegatorView.deletePresentacion(entity);
             FacesUtils.addInfoMessage(ZMessManager.ENTITY_SUCCESFULLYDELETED);
-            action_clear();
+            
             data = null;
         } catch (Exception e) {
             throw e;
@@ -357,7 +307,7 @@ public class PresentacionView implements Serializable {
 
     public String action_closeDialog() {
         setShowDialog(false);
-        action_clear();
+        
 
         return "";
     }
@@ -373,7 +323,7 @@ public class PresentacionView implements Serializable {
             businessDelegatorView.deletePresentacion(entity);
             data.remove(selectedPresentacion);
             FacesUtils.addInfoMessage(ZMessManager.ENTITY_SUCCESFULLYDELETED);
-            action_clear();
+            
         } catch (Exception e) {
             FacesUtils.addErrorMessage(e.getMessage());
         }
