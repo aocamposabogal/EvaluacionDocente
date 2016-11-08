@@ -49,22 +49,55 @@ public class WebServiceClient {
 		}
 		return finalResult;
 	}
+	
+	/**
+	 * 
+	 * @param codigo Codigo docente
+	 * @return Listado de materias por codigo docente
+	 */
 
 	public List<MateriaDTO> consultarMateriasPorCodigoDocente(String codigo) {
 
 		ArrayList<MateriaDTO> listadoMaterias = new ArrayList<>();
 		
+		//se llena las lista con todos las materias en un objeto de tipo httpClient
 		invocarServicioMateriasPorCodigo(codigo);
 		
+		// se separan las materias una a una y se agregan a una lista en un objeto tipo MateriaDTO
 		@SuppressWarnings("rawtypes")
 		Iterator i = finalResult.iterator();
-
 		while (i.hasNext()) {
 			JSONObject result = (JSONObject) i.next();
 			MateriaDTO materia = new MateriaDTO();
 			materia.setNombreDocente((String) result.get("nombre_doc"));
 			materia.setCodigo((String) result.get("espacio"));
 			materia.setNombre((String) result.get("nom_espacio"));
+			materia.setSemestre((String) result.get("sem"));
+			materia.setGrupo((String) result.get("grp"));
+			materia.setJornada((String) result.get("jorn"));
+			listadoMaterias.add(materia);
+		}
+		
+		return listadoMaterias;
+
+	}
+	
+	public List<MateriaDTO> consultarMateriasPorCodigoEstudiante(String codigo) {
+
+		ArrayList<MateriaDTO> listadoMaterias = new ArrayList<>();
+		
+		//se llena las lista con todos las materias en un objeto de tipo httpClient
+		invocarServicioMateriasPorCodigo(codigo);
+		
+		// se separan las materias una a una y se agregan a una lista en un objeto tipo MateriaDTO
+		@SuppressWarnings("rawtypes")
+		Iterator i = finalResult.iterator();
+		while (i.hasNext()) {
+			JSONObject result = (JSONObject) i.next();
+			MateriaDTO materia = new MateriaDTO();
+			materia.setNombreDocente((String) result.get("nomprofe"));
+			materia.setCodigo((String) result.get("codigom"));
+			materia.setNombre((String) result.get("nombrem"));
 			materia.setSemestre((String) result.get("sem"));
 			materia.setGrupo((String) result.get("grp"));
 			materia.setJornada((String) result.get("jorn"));

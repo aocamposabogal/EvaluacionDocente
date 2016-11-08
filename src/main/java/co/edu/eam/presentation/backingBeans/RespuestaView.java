@@ -1,43 +1,22 @@
 package co.edu.eam.presentation.backingBeans;
 
-import co.edu.eam.exceptions.*;
+
 import co.edu.eam.modelo.*;
+import co.edu.eam.modelo.dto.PreguntaDTO;
 import co.edu.eam.modelo.dto.RespuestaDTO;
 import co.edu.eam.presentation.businessDelegate.*;
 import co.edu.eam.utilities.*;
-
-import org.primefaces.component.calendar.*;
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.inputtext.InputText;
-
-import org.primefaces.event.RowEditEvent;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.Serializable;
-
-import java.sql.*;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
+import java.util.Random;
 import java.util.TimeZone;
-
 import javax.ejb.EJB;
-
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 
 /**
  * @author Zathura Code Generator http://zathuracode.org www.zathuracode.org
@@ -47,7 +26,6 @@ import javax.faces.event.ActionEvent;
 @ViewScoped
 public class RespuestaView implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = LoggerFactory.getLogger(RespuestaView.class);
 	private InputText txtNota;
 	private InputText txtId_Pregunta;
 	private InputText txtId_Presentacion;
@@ -71,50 +49,6 @@ public class RespuestaView implements Serializable {
 	public RespuestaView() {
 		super();
 	}
-
-//	public void rowEventListener(RowEditEvent e) {
-//		try {
-//			RespuestaDTO respuestaDTO = (RespuestaDTO) e.getObject();
-//
-//			if (txtNota == null) {
-//				txtNota = new InputText();
-//			}
-//
-//			txtNota.setValue(respuestaDTO.getNota());
-//
-//			if (txtId_Pregunta == null) {
-//				txtId_Pregunta = new InputText();
-//			}
-//
-//			txtId_Pregunta.setValue(respuestaDTO.getId_Pregunta());
-//
-//			if (txtId_Presentacion == null) {
-//				txtId_Presentacion = new InputText();
-//			}
-//
-//			txtId_Presentacion.setValue(respuestaDTO.getId_Presentacion());
-//
-//			if (txtId == null) {
-//				txtId = new InputText();
-//			}
-//
-//			txtId.setValue(respuestaDTO.getId());
-//
-//			Integer id = FacesUtils.checkInteger(txtId);
-//			entity = businessDelegatorView.getRespuesta(id);
-//
-//			action_modify();
-//		} catch (Exception ex) {
-//		}
-//	}
-//
-//	public String action_new() {
-//		action_clear();
-//		selectedRespuesta = null;
-//		setShowDialog(true);
-//
-//		return "";
-//	}
 
 	public String action_clear() {
 		entity = null;
@@ -199,6 +133,55 @@ public class RespuestaView implements Serializable {
 		}
 	}
 
+	public Integer generarid() {
+		Random r = new Random();
+		return r.nextInt(1000000);
+	}
+	
+	/**
+	 * 
+	 * <p>
+	 * <b>Este método se encarga de llamar al metodo que buscara la respuesta a
+	 * modificar su nota, y ademas procede a realizar el update en la base de
+	 * datos</b>
+	 * </p>
+	 * <br/>
+	 * <ul>
+	 * <li></li>
+	 * </ul>
+	 * <br/>
+	 * 
+	 * @author EAM <br/>
+	 *         Daniel Henao <br/>
+	 *         Email: danielhenao22@outlook.com <br/>
+	 *         07/11/2016
+	 * @version 1.0
+	 */
+	public String action_create_vacio(Integer presentacion, Integer evaluacion, Integer tipoEvaluacion) {
+		PreguntaView pv = new PreguntaView();
+		ArrayList<PreguntaDTO> preguntas = new ArrayList<>();
+		preguntas = (ArrayList<PreguntaDTO>) pv.getDataPregunta();
+		for (int i = 0; i < preguntas.size(); i++) {
+			try {
+				entity = new Respuesta();
+				Integer id = generarid();
+				entity.setId(id);
+				entity.setNota(0);
+				entity.setPregunta((preguntas.get(i).getId() != null)
+						? businessDelegatorView.getPregunta(preguntas.get(i).getId()) : null);
+				entity.setPresentacion(
+						(presentacion != null) ? businessDelegatorView.getPresentacion(presentacion) : null);
+				businessDelegatorView.saveRespuesta(entity);
+				action_clear();
+			} catch (Exception e) {
+				entity = null;
+				FacesUtils.addErrorMessage(e.getMessage());
+			}
+		}
+
+		return "";
+	}
+
 	/**
 	 * 
 	 * <p>
@@ -240,190 +223,6 @@ public class RespuestaView implements Serializable {
 
 		return data;
 	}
-
-//	public void listener_txtId() {
-//		try {
-//			Integer id = FacesUtils.checkInteger(txtId);
-//			entity = (id != null) ? businessDelegatorView.getRespuesta(id) : null;
-//		} catch (Exception e) {
-//			entity = null;
-//		}
-//
-//		if (entity == null) {
-//			txtNota.setDisabled(false);
-//			txtId_Pregunta.setDisabled(false);
-//			txtId_Presentacion.setDisabled(false);
-//			txtId.setDisabled(false);
-//			btnSave.setDisabled(false);
-//		} else {
-//			txtNota.setValue(entity.getNota());
-//			txtNota.setDisabled(false);
-//			txtId_Pregunta.setValue(entity.getPregunta().getId());
-//			txtId_Pregunta.setDisabled(false);
-//			txtId_Presentacion.setValue(entity.getPresentacion().getId());
-//			txtId_Presentacion.setDisabled(false);
-//			txtId.setValue(entity.getId());
-//			txtId.setDisabled(true);
-//			btnSave.setDisabled(false);
-//
-//			if (btnDelete != null) {
-//				btnDelete.setDisabled(false);
-//			}
-//		}
-//	}
-//
-//	public String action_edit(ActionEvent evt) {
-//		selectedRespuesta = (RespuestaDTO) (evt.getComponent().getAttributes().get("selectedRespuesta"));
-//		txtNota.setValue(selectedRespuesta.getNota());
-//		txtNota.setDisabled(false);
-//		txtId_Pregunta.setValue(selectedRespuesta.getId_Pregunta());
-//		txtId_Pregunta.setDisabled(false);
-//		txtId_Presentacion.setValue(selectedRespuesta.getId_Presentacion());
-//		txtId_Presentacion.setDisabled(false);
-//		txtId.setValue(selectedRespuesta.getId());
-//		txtId.setDisabled(true);
-//		btnSave.setDisabled(false);
-//		setShowDialog(true);
-//
-//		return "";
-//	}
-//
-//	public String action_save() {
-//		try {
-//			if ((selectedRespuesta == null) && (entity == null)) {
-//				action_create();
-//			} else {
-//				action_modify();
-//			}
-//
-//			data = null;
-//		} catch (Exception e) {
-//			FacesUtils.addErrorMessage(e.getMessage());
-//		}
-//
-//		return "";
-//	}
-//
-//	public String action_create() {
-//		try {
-//			entity = new Respuesta();
-//
-//			Integer id = FacesUtils.checkInteger(txtId);
-//
-//			entity.setId(id);
-//			entity.setNota(FacesUtils.checkInteger(txtNota));
-//			entity.setPregunta((FacesUtils.checkInteger(txtId_Pregunta) != null)
-//					? businessDelegatorView.getPregunta(FacesUtils.checkInteger(txtId_Pregunta)) : null);
-//			entity.setPresentacion((FacesUtils.checkInteger(txtId_Presentacion) != null)
-//					? businessDelegatorView.getPresentacion(FacesUtils.checkInteger(txtId_Presentacion)) : null);
-//			businessDelegatorView.saveRespuesta(entity);
-//			FacesUtils.addInfoMessage(ZMessManager.ENTITY_SUCCESFULLYSAVED);
-//			action_clear();
-//		} catch (Exception e) {
-//			entity = null;
-//			FacesUtils.addErrorMessage(e.getMessage());
-//		}
-//
-//		return "";
-//	}
-//
-//	public String action_modify() {
-//		try {
-//			if (entity == null) {
-//				Integer id = new Integer(selectedRespuesta.getId());
-//				entity = businessDelegatorView.getRespuesta(id);
-//			}
-//
-//			entity.setNota(FacesUtils.checkInteger(txtNota));
-//			entity.setPregunta((FacesUtils.checkInteger(txtId_Pregunta) != null)
-//					? businessDelegatorView.getPregunta(FacesUtils.checkInteger(txtId_Pregunta)) : null);
-//			entity.setPresentacion((FacesUtils.checkInteger(txtId_Presentacion) != null)
-//					? businessDelegatorView.getPresentacion(FacesUtils.checkInteger(txtId_Presentacion)) : null);
-//			businessDelegatorView.updateRespuesta(entity);
-//			FacesUtils.addInfoMessage(ZMessManager.ENTITY_SUCCESFULLYMODIFIED);
-//		} catch (Exception e) {
-//			data = null;
-//			FacesUtils.addErrorMessage(e.getMessage());
-//		}
-//
-//		return "";
-//	}
-//
-//	public String action_delete_datatable(ActionEvent evt) {
-//		try {
-//			selectedRespuesta = (RespuestaDTO) (evt.getComponent().getAttributes().get("selectedRespuesta"));
-//
-//			Integer id = new Integer(selectedRespuesta.getId());
-//			entity = businessDelegatorView.getRespuesta(id);
-//			action_delete();
-//		} catch (Exception e) {
-//			FacesUtils.addErrorMessage(e.getMessage());
-//		}
-//
-//		return "";
-//	}
-//
-//	public String action_delete_master() {
-//		try {
-//			Integer id = FacesUtils.checkInteger(txtId);
-//			entity = businessDelegatorView.getRespuesta(id);
-//			action_delete();
-//		} catch (Exception e) {
-//			FacesUtils.addErrorMessage(e.getMessage());
-//		}
-//
-//		return "";
-//	}
-//
-//	public void action_delete() throws Exception {
-//		try {
-//			businessDelegatorView.deleteRespuesta(entity);
-//			FacesUtils.addInfoMessage(ZMessManager.ENTITY_SUCCESFULLYDELETED);
-//			action_clear();
-//			data = null;
-//		} catch (Exception e) {
-//			throw e;
-//		}
-//	}
-//
-//	public String action_closeDialog() {
-//		setShowDialog(false);
-//		action_clear();
-//
-//		return "";
-//	}
-//
-//	public String actionDeleteDataTableEditable(ActionEvent evt) {
-//		try {
-//			selectedRespuesta = (RespuestaDTO) (evt.getComponent().getAttributes().get("selectedRespuesta"));
-//
-//			Integer id = new Integer(selectedRespuesta.getId());
-//			entity = businessDelegatorView.getRespuesta(id);
-//			businessDelegatorView.deleteRespuesta(entity);
-//			data.remove(selectedRespuesta);
-//			FacesUtils.addInfoMessage(ZMessManager.ENTITY_SUCCESFULLYDELETED);
-//			action_clear();
-//		} catch (Exception e) {
-//			FacesUtils.addErrorMessage(e.getMessage());
-//		}
-//
-//		return "";
-//	}
-//
-//	public String action_modifyWitDTO(Integer id, Integer nota, Integer id_Pregunta, Integer id_Presentacion)
-//			throws Exception {
-//		try {
-//			entity.setNota(FacesUtils.checkInteger(nota));
-//			businessDelegatorView.updateRespuesta(entity);
-//			FacesUtils.addInfoMessage(ZMessManager.ENTITY_SUCCESFULLYMODIFIED);
-//		} catch (Exception e) {
-//			// renderManager.getOnDemandRenderer("RespuestaView").requestRender();
-//			FacesUtils.addErrorMessage(e.getMessage());
-//			throw e;
-//		}
-//
-//		return "";
-//	}
 
 	public InputText getTxtNota() {
 		return txtNota;

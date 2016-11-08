@@ -3,46 +3,22 @@ package co.edu.eam.presentation.backingBeans;
 import co.edu.eam.exceptions.*;
 import co.edu.eam.modelo.*;
 import co.edu.eam.modelo.dto.PreguntaDTO;
-import co.edu.eam.modelo.dto.TipoEvaluacionDTO;
 import co.edu.eam.presentation.businessDelegate.*;
 import co.edu.eam.utilities.*;
-
-import org.primefaces.component.calendar.*;
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.inputtext.InputText;
-
-import org.primefaces.event.RowEditEvent;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.Serializable;
-
-import java.sql.*;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 import java.util.TimeZone;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.persistence.Convert;
 
 /**
  * 
@@ -54,7 +30,6 @@ import javax.persistence.Convert;
 @ViewScoped
 public class PreguntaView implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = LoggerFactory.getLogger(PreguntaView.class);
 	public final static int ESTADO_PREGUNTA = 1;
 	private InputText txtEstado;
 	private InputText txtPregunta;
@@ -66,9 +41,7 @@ public class PreguntaView implements Serializable {
 	private CommandButton btnModify;
 	private CommandButton btnDelete;
 	private CommandButton btnClear;
-	private List<PreguntaDTO> data;
-	private List<PreguntaDTO> dataCopia;
-	private PreguntaDTO selectedPregunta;
+	private List<PreguntaDTO> data;	private PreguntaDTO selectedPregunta;
 	private Pregunta entity;
 	private boolean showDialog;
 	private Integer idTipoEvaluacion;
@@ -157,40 +130,6 @@ public class PreguntaView implements Serializable {
 
 		return "";
 	}
-
-//	public void listener_txtId() {
-//		try {
-//			Integer id = FacesUtils.checkInteger(txtId);
-//			entity = (id != null) ? businessDelegatorView.getPregunta(id) : null;
-//		} catch (Exception e) {
-//			entity = null;
-//		}
-//
-//		if (entity == null) {
-//			txtEstado.setDisabled(false);
-//			txtPregunta.setDisabled(false);
-//			txtId_Periodo.setDisabled(false);
-//			txtId_TipoEvaluacion.setDisabled(false);
-//			txtId.setDisabled(false);
-//			btnSave.setDisabled(false);
-//		} else {
-//			txtEstado.setValue(entity.getEstado());
-//			txtEstado.setDisabled(false);
-//			txtPregunta.setValue(entity.getPregunta());
-//			txtPregunta.setDisabled(false);
-//			txtId_Periodo.setValue(entity.getPeriodo().getId());
-//			txtId_Periodo.setDisabled(false);
-//			txtId_TipoEvaluacion.setValue(entity.getTipoEvaluacion().getId());
-//			txtId_TipoEvaluacion.setDisabled(false);
-//			txtId.setValue(entity.getId());
-//			txtId.setDisabled(true);
-//			btnSave.setDisabled(false);
-//
-//			if (btnDelete != null) {
-//				btnDelete.setDisabled(false);
-//			}
-//		}
-//	}
 
 	/**
 	 * <b>
@@ -496,6 +435,20 @@ public class PreguntaView implements Serializable {
 
 		return data;
 	}
+	
+	public List<PreguntaDTO> getDataPreguntas(Integer tipoEvaluacion) {
+		try {
+			if (data == null) {
+				data = businessDelegatorView.getDataPregunta(tipoEvaluacion, ESTADO_PREGUNTA);
+				FacesUtils.addInfoMessage(ZMessManager.ENTCHILD);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return data;
+	}
+
 
 	public InputText getTxtEstado() {
 		return txtEstado;
@@ -676,10 +629,6 @@ public class PreguntaView implements Serializable {
 
 	public List<TipoEvaluacion> getListaEntidadTipoEvaluacion() {
 		return listaEntidadTipoEvaluacion;
-	}
-
-	public void setDataCopia(List<PreguntaDTO> dataCopia) {
-		this.dataCopia = dataCopia;
 	}
 
 	public void setListaEntidadTipoEvaluacion(List<TipoEvaluacion> listaEntidadTipoEvaluacion) {
