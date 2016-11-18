@@ -436,15 +436,15 @@ public class PreguntaView implements Serializable {
 		return data;
 	}
 
-	public List<PreguntaDTO> getDataPreguntas(Integer tipoEvaluacion){
-		data = null;
+	public List<Pregunta> getDataPreguntas(){
 		try {
-			data = businessDelegatorView.getDataPregunta(tipoEvaluacion, ESTADO_PREGUNTA);
+			return businessDelegatorView.getPregunta();
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("salio " + data.toString());
-		return data;
+		return null;
+		
 	}
 
 	public InputText getTxtEstado() {

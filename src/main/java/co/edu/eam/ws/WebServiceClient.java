@@ -14,7 +14,6 @@ import org.apache.http.protocol.HTTP;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
-
 import co.edu.eam.modelo.dto.MateriaDTO;
 import co.edu.eam.modelo.dto.DocenteDTO;
 public class WebServiceClient {
@@ -121,14 +120,9 @@ public class WebServiceClient {
 	 * @param combo, numero que se obtiene en el combo para filtrar la busqueda
 	 * @return, retorna los docentes activos del programa.
 	 */
-	public static List<DocenteDTO> consultarDocentesActivosPorPrograma(String codigo) {
-
-		ArrayList<DocenteDTO> listadoDocente = new ArrayList<>();
-		
-		//se llena las lista con todos los docentes en un objeto de tipo httpClient
-		invocarServicioMateriasPorCodigo(codigo,"3");
-		
-		// se separan los docentes uno a uno y se agregan a una lista en un objeto tipo DocenteDTO
+	public List<DocenteDTO> consultarDocentesActivosPorPrograma(String codigo) {
+		ArrayList<DocenteDTO> listadoDocente = new ArrayList<>();	
+		invocarServicioMateriasPorCodigo(codigo,"3");	
 		@SuppressWarnings("rawtypes")
 		Iterator i = finalResult.iterator();
 		while (i.hasNext()) {
@@ -137,8 +131,7 @@ public class WebServiceClient {
 			doc.setCodigoDocente((String)result.get("codigoprofe"));
 			doc.setCodigoPrograma((long)result.get("programa"));
 			doc.setNombreDocente((String)result.get("nomcompleto"));
-			doc.setNombrePrograma((String)result.get("nprograma"));
-		
+			doc.setNombrePrograma((String)result.get("nprograma"));		
 			listadoDocente.add(doc);
 		}
 		
@@ -185,15 +178,7 @@ public class WebServiceClient {
 		//for (MateriaDTO materiaDTO : materias) {
 			//System.out.println(materiaDTO.getNombre());
 		//}
-		
-		
-		/*
-		List<DocenteDTO> doc= consultarDocentesActivosPorPrograma("23","3");
-		for (DocenteDTO docts : doc) {
-			System.out.println(docts.getCodigoDocente()+","+ docts.getNombreDocente());
-		}
-		*/
-		
+				
 		/*
 		List<DocenteDTO> doc= consultarDocentesPorMateria("20755", "2");
 		for (DocenteDTO docts : doc) {

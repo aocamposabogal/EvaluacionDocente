@@ -1,8 +1,6 @@
 package co.edu.eam.presentation.backingBeans;
 
-
 import co.edu.eam.modelo.*;
-import co.edu.eam.modelo.dto.PreguntaDTO;
 import co.edu.eam.modelo.dto.RespuestaDTO;
 import co.edu.eam.presentation.businessDelegate.*;
 import co.edu.eam.utilities.*;
@@ -137,7 +135,7 @@ public class RespuestaView implements Serializable {
 		Random r = new Random();
 		return r.nextInt(1000000);
 	}
-	
+
 	/**
 	 * 
 	 * <p>
@@ -156,12 +154,19 @@ public class RespuestaView implements Serializable {
 	 *         Email: danielhenao22@outlook.com <br/>
 	 *         07/11/2016
 	 * @version 1.0
+	 * @throws Exception
 	 */
-	public String action_create_vacio(Integer presentacion, Integer evaluacion, Integer tipoEvaluacion) {
-		PreguntaView pv = new PreguntaView();
-		ArrayList<PreguntaDTO> preguntas = new ArrayList<>();
-		preguntas = (ArrayList<PreguntaDTO>) pv.getDataPreguntas(tipoEvaluacion);
+	public String action_create_vacio(Integer presentacion, Integer evaluacion, Integer tipoEvaluacion)
+			throws Exception {
+		List<Pregunta> preguntas = new ArrayList<Pregunta>();
+		preguntas = businessDelegatorView.getPregunta();
+		System.out.println("********" + preguntas.size());
+		System.out.flush();
 		for (int i = 0; i < preguntas.size(); i++) {
+			System.out.println("********" + preguntas.get(i).getTipoEvaluacion());
+			System.out.flush();
+			// if (preguntas.get(i).getTipoEvaluacion().getId() ==
+			// tipoEvaluacion && preguntas.get(i).getEstado() == "1") {
 			try {
 				entity = new Respuesta();
 				Integer id = generarid();
@@ -178,6 +183,8 @@ public class RespuestaView implements Serializable {
 				FacesUtils.addErrorMessage(e.getMessage());
 			}
 		}
+
+		// }
 
 		return "";
 	}
