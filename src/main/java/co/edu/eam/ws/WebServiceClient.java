@@ -21,7 +21,7 @@ public class WebServiceClient {
 
 	JSONArray finalResult = null;
 
-	private JSONArray invocarServicioMateriasPorCodigo(String codigo) {
+	public JSONArray invocarServicioMateriasPorCodigo(String codigo, String tipo) {
 
 		DefaultHttpClient httpClient = new DefaultHttpClient();
 		try {
@@ -29,7 +29,9 @@ public class WebServiceClient {
 			HttpPost request = new HttpPost("http://www.eam.edu.co/service/servicio.php");
 			request.addHeader("accept", "application/json");
 			List<BasicNameValuePair> nvp = new ArrayList<BasicNameValuePair>();
-			nvp.add(new BasicNameValuePair("codig", "2706"));
+			nvp.add(new BasicNameValuePair("codig", codigo));
+			nvp.add(new BasicNameValuePair("signal", tipo));
+			//
 			request.setEntity(new UrlEncodedFormEntity(nvp, HTTP.UTF_8));
 			HttpResponse response = httpClient.execute(request);
 
@@ -50,6 +52,7 @@ public class WebServiceClient {
 		return finalResult;
 	}
 	
+	
 	/**
 	 * 
 	 * @param codigo Codigo docente
@@ -61,7 +64,7 @@ public class WebServiceClient {
 		ArrayList<MateriaDTO> listadoMaterias = new ArrayList<>();
 		
 		//se llena las lista con todos las materias en un objeto de tipo httpClient
-		invocarServicioMateriasPorCodigo(codigo);
+		invocarServicioMateriasPorCodigo(codigo,"0");
 		
 		// se separan las materias una a una y se agregan a una lista en un objeto tipo MateriaDTO
 		@SuppressWarnings("rawtypes")
@@ -72,7 +75,7 @@ public class WebServiceClient {
 			materia.setNombreDocente((String) result.get("nombre_doc"));
 			materia.setCodigo((String) result.get("espacio"));
 			materia.setNombre((String) result.get("nom_espacio"));
-			materia.setSemestre((String) result.get("sem"));
+			materia.setSemestre((String) result.get("sem").toString());
 			materia.setGrupo((String) result.get("grp"));
 			materia.setJornada((String) result.get("jorn"));
 			listadoMaterias.add(materia);
@@ -87,7 +90,7 @@ public class WebServiceClient {
 		ArrayList<MateriaDTO> listadoMaterias = new ArrayList<>();
 		
 		//se llena las lista con todos las materias en un objeto de tipo httpClient
-		invocarServicioMateriasPorCodigo(codigo);
+		invocarServicioMateriasPorCodigo(codigo,"0");
 		
 		// se separan las materias una a una y se agregan a una lista en un objeto tipo MateriaDTO
 		@SuppressWarnings("rawtypes")
@@ -98,7 +101,7 @@ public class WebServiceClient {
 			materia.setNombreDocente((String) result.get("nomprofe"));
 			materia.setCodigo((String) result.get("codigom"));
 			materia.setNombre((String) result.get("nombrem"));
-			materia.setSemestre((String) result.get("sem"));
+			materia.setSemestre((String) result.get("sem").toString());
 			materia.setGrupo((String) result.get("grp"));
 			materia.setJornada((String) result.get("jorn"));
 			listadoMaterias.add(materia);
@@ -107,5 +110,6 @@ public class WebServiceClient {
 		return listadoMaterias;
 
 	}
+	
 
 }
