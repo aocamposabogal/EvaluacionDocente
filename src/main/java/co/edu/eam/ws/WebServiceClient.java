@@ -119,7 +119,7 @@ public class WebServiceClient {
 	 * @param combo, numero que se obtiene en el combo para filtrar la busqueda
 	 * @return, retorna los docentes activos del programa.
 	 */
-	public static List<DocenteDTO> consultarDocentesActivosPorPrograma(String codigo, String combo) {
+	public static List<DocenteDTO> consultarDocentesActivosPorPrograma(String codigo) {
 
 		ArrayList<DocenteDTO> listadoDocente = new ArrayList<>();
 		
@@ -150,7 +150,7 @@ public class WebServiceClient {
 	 * @param combo, Numero que se obtiene al filtrar la busqueda.
 	 * @return, Retorna los datos del docente o los docentes.
 	 */
-	public static List<DocenteDTO> consultarDocentesPorMateria(String codigo, String combo) {
+	public static List<DocenteDTO> consultarDocentesPorMateria(String codigo) {
 
 		ArrayList<DocenteDTO> listadoDocente = new ArrayList<>();
 		
@@ -198,6 +198,7 @@ public class WebServiceClient {
 			System.out.println(docts.getCodigoDocente()+","+ docts.getNombreDocente());
 		}
 		*/
+		
 		
 		
 	}
