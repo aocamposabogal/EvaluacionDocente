@@ -104,13 +104,6 @@ public class PresentacionView implements Serializable {
 		}
 	}
 
-	public String action_new() {
-		selectedPresentacion = null;
-		setShowDialog(true);
-
-		return "";
-	}
-
 	public void listener_txtId() {
 		try {
 			Integer id = FacesUtils.checkInteger(txtId);
@@ -174,6 +167,7 @@ public class PresentacionView implements Serializable {
 	}
 
 	public String action_save() {
+		selectedPresentacion = null;
 		try {
 
 			inicializarPresentaciones();
