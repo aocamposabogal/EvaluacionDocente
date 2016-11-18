@@ -185,6 +185,7 @@ public class PresentacionView implements Serializable {
 	}
 
 	public void inicializarPresentaciones() {
+		
 		RespuestaView rv = new RespuestaView();
 		WebServiceClient ws = new WebServiceClient();
 		ArrayList<MateriaDTO> listadoMaterias = new ArrayList<>();
