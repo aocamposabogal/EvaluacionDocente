@@ -22,8 +22,7 @@ import javax.faces.event.ActionEvent;
 
 /**
  * 
- * @author Jefry Londoño <jjmb2789@gmail.com>
- * @17/10/2016
+ * @author Jefry Londoño <jjmb2789@gmail.com> @17/10/2016
  * @version
  */
 @ManagedBean
@@ -41,7 +40,8 @@ public class PreguntaView implements Serializable {
 	private CommandButton btnModify;
 	private CommandButton btnDelete;
 	private CommandButton btnClear;
-	private List<PreguntaDTO> data;	private PreguntaDTO selectedPregunta;
+	private List<PreguntaDTO> data;
+	private PreguntaDTO selectedPregunta;
 	private Pregunta entity;
 	private boolean showDialog;
 	private Integer idTipoEvaluacion;
@@ -232,7 +232,7 @@ public class PreguntaView implements Serializable {
 
 		return "";
 	}
-	
+
 	/**
 	 * <b>
 	 * <p>
@@ -267,7 +267,7 @@ public class PreguntaView implements Serializable {
 
 		return "";
 	}
-	
+
 	/**
 	 * <b>
 	 * <p>
@@ -417,7 +417,7 @@ public class PreguntaView implements Serializable {
 	 * @author EAM <br/>
 	 *         Santiago Idarraga <br/>
 	 *         <br/>
-	 *         13/10/2016 
+	 *         13/10/2016
 	 * @version 1.0
 	 * @return la lista con las preguntas que se en encuentre en la base de
 	 *         datos con la realizacion de la consulta SQL
@@ -435,20 +435,17 @@ public class PreguntaView implements Serializable {
 
 		return data;
 	}
-	
-	public List<PreguntaDTO> getDataPreguntas(Integer tipoEvaluacion) {
+
+	public List<PreguntaDTO> getDataPreguntas(Integer tipoEvaluacion){
+		data = null;
 		try {
-			if (data == null) {
-				data = businessDelegatorView.getDataPregunta(tipoEvaluacion, ESTADO_PREGUNTA);
-				FacesUtils.addInfoMessage(ZMessManager.ENTCHILD);
-			}
+			data = businessDelegatorView.getDataPregunta(tipoEvaluacion, ESTADO_PREGUNTA);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		System.out.println("salio " + data.toString());
 		return data;
 	}
-
 
 	public InputText getTxtEstado() {
 		return txtEstado;
@@ -465,7 +462,6 @@ public class PreguntaView implements Serializable {
 	public void setTxtPregunta(InputText txtPregunta) {
 		this.txtPregunta = txtPregunta;
 	}
-	
 
 	public InputText getTxtId_Periodo() {
 		return txtId_Periodo;

@@ -88,7 +88,7 @@ public class Presentacion  implements java.io.Serializable {
     }
 
     
-    @Column(name="docente", nullable=false, length=30)
+    @Column(name="docente", nullable=false, length=50)
     public String getDocente() {
         return this.docente;
     }

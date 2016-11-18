@@ -160,7 +160,7 @@ public class RespuestaView implements Serializable {
 	public String action_create_vacio(Integer presentacion, Integer evaluacion, Integer tipoEvaluacion) {
 		PreguntaView pv = new PreguntaView();
 		ArrayList<PreguntaDTO> preguntas = new ArrayList<>();
-		preguntas = (ArrayList<PreguntaDTO>) pv.getDataPregunta();
+		preguntas = (ArrayList<PreguntaDTO>) pv.getDataPreguntas(tipoEvaluacion);
 		for (int i = 0; i < preguntas.size(); i++) {
 			try {
 				entity = new Respuesta();

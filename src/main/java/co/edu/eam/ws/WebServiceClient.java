@@ -180,12 +180,12 @@ public class WebServiceClient {
 	}
 	
 	public static void main(String[] args){
-		/*
-		List<MateriaDTO> materias=consultarMateriasPorCodigoDocente("2706");
-		for (MateriaDTO materiaDTO : materias) {
-			System.out.println(materiaDTO.getNombre());
-		}
-		*/
+		
+		//List<MateriaDTO> materias=consultarMateriasPorCodigoEstudiante("2320131017");
+		//for (MateriaDTO materiaDTO : materias) {
+			//System.out.println(materiaDTO.getNombre());
+		//}
+		
 		
 		/*
 		List<DocenteDTO> doc= consultarDocentesActivosPorPrograma("23","3");

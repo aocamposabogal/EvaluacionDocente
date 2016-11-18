@@ -189,17 +189,19 @@ public class PresentacionView implements Serializable {
 		RespuestaView rv = new RespuestaView();
 		WebServiceClient ws = new WebServiceClient();
 		ArrayList<MateriaDTO> listadoMaterias = new ArrayList<>();
-		listadoMaterias = (ArrayList<MateriaDTO>) ws
-				.consultarMateriasPorCodigoEstudiante(FacesUtils.checkString(txtEvaluador));
-
+		listadoMaterias = (ArrayList<MateriaDTO>) ws.consultarMateriasPorCodigoEstudiante(FacesUtils.checkString(txtEvaluador));
 		for (int i = 0; i < listadoMaterias.size(); i++) {
 			try {
 				entity = new Presentacion();
 				Integer id = generarid();
-				Integer evaluacion = 1;
+				Integer evaluacion = 695;
 				Integer tipoEvaluacion = 1;
 				entity.setComentario("");
-				entity.setDocente(listadoMaterias.get(i).getNombreDocente());
+				String docente = listadoMaterias.get(i).getNombreDocente().toString();
+				if(docente.length()>30){
+					docente="Jhonny";
+				}
+				entity.setDocente(docente);
 				entity.setEstado("0");
 				entity.setEvaluador(FacesUtils.checkString(txtEvaluador));
 				entity.setId(id);
